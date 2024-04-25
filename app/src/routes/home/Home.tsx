@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { newMeeting, useClub } from '@/hooks/useClub';
 import { useCurrentAccount, useSignAndExecuteTransactionBlock } from '@mysten/dapp-kit';
 import { useNavigate } from 'react-router-dom';
+import qrCode from "@/qr-code.png";
 
 export const Home = () => {
 	const [meetingName, setMeetingName] = useState('');
@@ -32,8 +33,13 @@ export const Home = () => {
 
     }
 
-	if (clubData && clubData.next_meeting_time !== '0')
-		return <div>Please scan the QR code to check-in.</div>;
+	if (clubData  && Date.now() - Number(clubData.next_meeting_time) < 11 * 60000)
+		return (
+        <div className='flex flex-col'>
+            <span>Please scan the QR code to check-in.</span>
+            <img width={400} height={400} src={qrCode} alt="qr-code"></img>
+        </div>
+    );
 	else if(account?.address)
 		return (
 			<div className="flex flex-col">
