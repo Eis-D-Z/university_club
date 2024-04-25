@@ -1,0 +1,1 @@
+export const image_url = "https://i.imgur.com/gxPubPT.jpeg";
